@@ -1,0 +1,26 @@
+[
+    {
+        "animal": "cat",
+        "age": "5",
+        "color": "black",
+        "gender":"male"
+    },
+    {
+        "animal": "dog",
+        "age": "8",
+        "color": "black",
+        "gender":"male"
+    },
+    {
+        "animal": "rabbit",
+        "age": "1",
+        "color": "white",
+        "gender":"male"
+    },
+    {
+        "animal": "cat",
+        "age": "3",
+        "color": "grey",
+        "gender":"male"
+    }
+]
