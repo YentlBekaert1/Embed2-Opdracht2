@@ -1,0 +1,1 @@
+/usr/bin/cc   -rdynamic CMakeFiles/ENV-CGI2.dir/env-cgi2.c.o  -o ENV-CGI2 
