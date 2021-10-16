@@ -38,16 +38,23 @@ int main(void)
     fgets(input, len+1, stdin);
     unencode(input+EXTRA, input+len, data);
     printf("%s",data);
-    f = fopen("../../../var/www/html/data.txt", "a+");
+    int ch;
+    f = fopen("../../../var/www/html/data.txt", "r+");
     if(f == NULL){
       printf("<P>Sorry, cannot store your data.");
     }
     else{
+                fseek(f, -1, SEEK_END);
+                fputs(",", f);
+                fputs("{", f);
+                fputs(data, f);
+                fputs("}", f);
+                fputs("]", f);
+  
+      }
       printf("<P>File found");
-      fputs(data, f);
       fclose(f);
-       printf("<P>Thank you! Your contribution has been stored.");
+      printf("<P>Thank you! Your contribution has been stored.");
     }
-  }
-return 0;
+  return 0;
 }
