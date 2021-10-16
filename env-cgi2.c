@@ -31,9 +31,23 @@ int main(void)
   printf("%s%c%c\n","Content-Type:text/html;charset=iso-8859-1",13,10);
   printf("<TITLE>Response</TITLE>\n");
   lenstr = getenv("CONTENT_LENGTH");
-  sscanf(lenstr,"%ld",&len)!=1;
-  fgets(input, len+1, stdin);
-  unencode(input+EXTRA, input+len, data);
-  printf("%s",data);
-  return 0;
+  if(lenstr == NULL || sscanf(lenstr,"%ld",&len)!=1 || len > MAXLEN)
+  printf("<P>Error in invocation - wrong FORM probably.");
+  else {
+    FILE *f;
+    fgets(input, len+1, stdin);
+    unencode(input+EXTRA, input+len, data);
+    printf("%s",data);
+    f = fopen("../../../var/www/html/data.txt", "a+");
+    if(f == NULL){
+      printf("<P>Sorry, cannot store your data.");
+    }
+    else{
+      printf("<P>File found");
+      fputs(data, f);
+      fclose(f);
+       printf("<P>Thank you! Your contribution has been stored.");
+    }
+  }
+return 0;
 }
