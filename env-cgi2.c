@@ -68,7 +68,6 @@ int main(void)
     //printf("%s",test2[3]);
     //printf("%s",test2[5]);
 
-    int ch;
     f = fopen("../../../var/www/html/test.json", "r+");
     if(f == NULL){
       printf("<P>Sorry, cannot store your data.");
@@ -84,16 +83,23 @@ int main(void)
 
         //{"animal": "cat","age": "3","color": "grey","gender":"male"}
         char json[100] = "";
-         sprintf(json, ",{\"time\":\"%s\",\"animal\":\"%s\",\"age\":\"%s\",\"color\":\"%s\",\"gender\":\"%s\"}]", time, test2[2],test2[4],test2[6],test2[8]);
-                fseek(f, -1, SEEK_END);
-                fputs(json, f);
-                
-  
+        sprintf(json, ",{\"time\":\"%s\",\"animal\":\"%s\",\"age\":\"%s\",\"color\":\"%s\",\"gender\":\"%s\"}]", time, test2[2],test2[4],test2[6],test2[8]);
+        fseek(f, -1, SEEK_END);
+        fputs(json, f);
       }
       printf("<P>File found");
       fclose(f);
       printf("<P>Thank you! Your contribution has been stored.");
     
   }
+  const char * redirect_page_format =
+    "<html>\n"
+    "<head>\n"
+    "<meta http-equiv=\"REFRESH\"\n"
+    "content=\"0;url=http://rpi-yb/\">\n"
+    "</head>\n"
+    "</html>\n";
+   printf (redirect_page_format);
   return 0;
+  
 }
