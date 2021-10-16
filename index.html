@@ -15,7 +15,6 @@
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="">
 
     <title>Opdracht 2:CGI</title>
   </head>
@@ -24,9 +23,11 @@
     <nav class="navbar navbar-light bg-light">
       <span class="navbar-brand mb-3 h1">Opdracht 2:</span>
     </nav>
-    <table class="table">
+    <div class="container">
+      <table class="table">
         <thead class="thead-light">
           <tr>
+            <th scope="col">time</th>
             <th scope="col">animal</th>
             <th scope="col">age</th>
             <th scope="col">color</th>
@@ -34,18 +35,32 @@
           </tr>
         </thead>
         <tbody id="tablebody">
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
+          
         </tbody>
-      </table>
+    </table>
       <form action="/cgi-bin/ENV-CGI2/" method="POST">
-        <input type="text" name="test" id="test">
-        <button type="submit">send</button>
+        <div class="form-group">
+          <label for="Animalname">Name animal</label>
+          <input type="text" name="Animalname" class="form-control" id="Animalname" aria-describedby="Animalname">
+        </div>
+        <div class="form-group">
+          <label for="Age">Age</label>
+          <input type="number" name="Age" class="form-control" id="Age">
+        </div>
+        <div class="form-group">
+          <label for="Color">Color</label>
+          <input type="text" name="Color" class="form-control" id="Color" aria-describedby="Color">
+        </div>
+        <div class="form-group">
+          <label for="Gender">Gender</label>
+          <select class="form-control" name="Gender" id="Gender">
+            <option>male</option>
+            <option>female</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+    </div>
     
     <!-- Optional JavaScript; choose one of the two! -->
     <script>
@@ -62,7 +77,9 @@
             let animals = await getAnimals();
             let html = '';
             animals.forEach(animal => {
-                let htmlSegment = `<tr><td>${animal.animal}</td>
+                let htmlSegment = `<tr>
+                                    <td>${animal.time}</td>
+                                    <td>${animal.animal}</td>
                                     <td>${animal.age}</td>
                                     <td>${animal.color}</td>
                                     <td>${animal.gender}</td> </tr>`;
