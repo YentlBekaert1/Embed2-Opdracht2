@@ -6,7 +6,7 @@
 #define MAXLEN 80
 #define EXTRA 5
 /* 4 for field name "data", 1 for "=" */
-#define MAXINPUT MAXLEN+EXTRA+2
+#define MAXINPUT MAXLEN
 
 
 void unencode(char *src, char *last, char *dest)
@@ -30,6 +30,7 @@ void unencode(char *src, char *last, char *dest)
 int main(void)
 {
   char *lenstr;
+  char *cookie;
   char input[MAXINPUT], data[MAXINPUT];
   long len;
   printf("%s%c%c\n","Content-Type:text/html;charset=iso-8859-1",13,10);
@@ -40,7 +41,7 @@ int main(void)
     printf("<P>Error in invocation - wrong FORM probably.");
   }
   else {
-    FILE *f;
+  
     fgets(input, len+1, stdin);
     unencode(input+EXTRA, input+len, data);
     //verdeel de string in iedere form element
@@ -64,15 +65,25 @@ int main(void)
         }
     }
 
-    printf("%s",test2[8]);
-    //printf("%s",test2[3]);
-    //printf("%s",test2[5]);
+      printf(test2[8]);
 
-    f = fopen("../../../var/www/html/test.json", "r+");
+    cookie = getenv("HTTP_COOKIE");
+    FILE *f;
+    char filename[40] = "";
+    sprintf(filename,"../../../var/www/html/%s.json",cookie);
+    f = fopen(filename, "a+");
     if(f == NULL){
       printf("<P>Sorry, cannot store your data.");
     }
     else{
+        int isFileEmpty = fgetc(f);
+        printf("%d",isFileEmpty);
+        if(isFileEmpty <0){
+          fputs("[{},", f);
+          fclose(f);
+        }
+        fclose(f);
+        f = fopen(filename, "r+");
         time_t current_time;
 	      struct tm tm = *localtime(&current_time);
         //get the time and put it in a string
@@ -86,9 +97,10 @@ int main(void)
         sprintf(json, ",{\"time\":\"%s\",\"animal\":\"%s\",\"age\":\"%s\",\"color\":\"%s\",\"gender\":\"%s\"}]", time, test2[2],test2[4],test2[6],test2[8]);
         fseek(f, -1, SEEK_END);
         fputs(json, f);
+        fclose(f);
       }
       printf("<P>File found");
-      fclose(f);
+      
       printf("<P>Thank you! Your contribution has been stored.");
     
   }
